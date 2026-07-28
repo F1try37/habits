@@ -1,0 +1,8 @@
+### Создать привычку
+POST http://127.0.0.1:8081/api/habits
+Content-Type: application/json
+
+{
+  "name": "Читать",
+  "description": "30 страниц"
+}
