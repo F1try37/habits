@@ -6,3 +6,21 @@ Content-Type: application/json
   "name": "Читать",
   "description": "30 страниц"
 }
+
+### Получить список привычек
+GET http://127.0.0.1:8081/api/habits
+
+### Привычка по id
+GET http://127.0.0.1:8081/api/habits/1
+
+### Несуществующая привычка
+GET http://127.0.0.1:8081/api/habits/999
+
+### Невалидная привычка
+POST http://127.0.0.1:8081/api/habits
+Content-Type: application/json
+
+{
+  "name": "",
+  "description": "тест"
+}
