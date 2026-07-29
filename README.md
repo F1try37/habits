@@ -9,10 +9,11 @@ Java21, Spring Boot 4.1.0, Spring Data JPA, PostgreSQL 16, Docker, Maven.
 ## Start
 
 1. Clone repository
-2. Set the DB_PASSWORD environment variable
-3. `docker compose up -d` - up postgres
-4. `./mvnw spring-boot:run` or start from IDE
-5. App is available on http://localhost:8081
+2. Copy `.env.example` to `.env` and set the password
+3. Set the same value as DB_PASSWORD environment variable in your IDE run configuration
+4. `docker compose up -d` - up postgres
+5. `./mvnw spring-boot:run` or start from IDE
+6. App is available on http://localhost:8081
 
 ## API
 
