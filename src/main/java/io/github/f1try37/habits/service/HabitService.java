@@ -6,10 +6,12 @@ import io.github.f1try37.habits.entity.Habit;
 import io.github.f1try37.habits.exceptions.HabitNotFoundException;
 import io.github.f1try37.habits.repository.HabitRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(readOnly = true)
 public class HabitService {
 
     private final HabitRepository habitRepository;
@@ -22,6 +24,7 @@ public class HabitService {
         return new HabitResponse(habit.getId(), habit.getName(), habit.getDescription(), habit.getCreatedAt());
     }
 
+    @Transactional
     public HabitResponse create(HabitCreateRequest request) {
         Habit habit = new Habit();
         habit.setName(request.name());
@@ -30,13 +33,27 @@ public class HabitService {
         return toResponse(newHabit);
     }
 
-    public List<HabitResponse> getResponses() {
+    public List<HabitResponse> getAll() {
         List<Habit> habits = habitRepository.findAll();
         return habits.stream().map(this::toResponse).toList();
     }
 
-    public HabitResponse getResponseById(Long id) {
+    public HabitResponse getById(Long id) {
         Habit habit = habitRepository.findById(id).orElseThrow(() -> new HabitNotFoundException(id));
         return toResponse(habit);
+    }
+
+    @Transactional
+    public HabitResponse update(Long id, HabitCreateRequest request) {
+        Habit habit = habitRepository.findById(id).orElseThrow(() -> new HabitNotFoundException(id));
+        habit.setName(request.name());
+        habit.setDescription(request.description());
+        return toResponse(habit);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        Habit habit = habitRepository.findById(id).orElseThrow(() -> new HabitNotFoundException(id));
+        habitRepository.delete(habit);
     }
 }

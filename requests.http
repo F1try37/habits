@@ -24,3 +24,18 @@ Content-Type: application/json
   "name": "",
   "description": "тест"
 }
+
+### Обновление привычки
+PUT http://127.0.0.1:8081/api/habits/2
+Content-Type: application/json
+
+{
+  "name": "Читать книги",
+  "description": "50 страниц"
+}
+
+### Удаление привычки
+DELETE http://127.0.0.1:8081/api/habits/1
+
+### Удаление несуществующей привычки
+DELETE http://127.0.0.1:8081/api/habits/999

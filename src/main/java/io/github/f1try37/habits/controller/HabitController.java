@@ -27,14 +27,26 @@ public class HabitController {
     }
 
     @GetMapping
-    public ResponseEntity<List<HabitResponse>> getAllResponses() {
-        List<HabitResponse> responses = habitService.getResponses();
+    public ResponseEntity<List<HabitResponse>> getAll() {
+        List<HabitResponse> responses = habitService.getAll();
         return ResponseEntity.ok(responses);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HabitResponse> getResponseById(@PathVariable Long id) {
-        HabitResponse response = habitService.getResponseById(id);
+    public ResponseEntity<HabitResponse> getById(@PathVariable Long id) {
+        HabitResponse response = habitService.getById(id);
         return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<HabitResponse> update(@PathVariable Long id, @Valid @RequestBody HabitCreateRequest request) {
+        HabitResponse response = habitService.update(id,request);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        habitService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
