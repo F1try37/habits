@@ -30,7 +30,7 @@ class HabitControllerTest {
     @Test
     void shouldCreateHabitAndReturn201() throws Exception {
         //given
-        HabitResponse response = new HabitResponse(1L, "Reading", "30 pages", LocalDateTime.now());
+        HabitResponse response = new HabitResponse(1L, "Reading", "30 pages", LocalDateTime.now(), 0);
         when(habitService.create(any(HabitCreateRequest.class))).thenReturn(response);
 
         //when + then

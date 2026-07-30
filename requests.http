@@ -3,8 +3,8 @@ POST http://127.0.0.1:8081/api/habits
 Content-Type: application/json
 
 {
-  "name": "Читать",
-  "description": "30 страниц"
+  "name": "Учиться",
+  "description": "по 2 часа в день"
 }
 
 ### Получить список привычек
@@ -35,7 +35,13 @@ Content-Type: application/json
 }
 
 ### Удаление привычки
-DELETE http://127.0.0.1:8081/api/habits/1
+DELETE http://127.0.0.1:8081/api/habits/4
 
 ### Удаление несуществующей привычки
 DELETE http://127.0.0.1:8081/api/habits/999
+
+### Отметить привычку выполненной
+POST http://127.0.0.1:8081/api/habits/2/entries
+
+### Отметить несуществующую привычку выполненной
+POST http://127.0.0.1:8081/api/habits/999/entries

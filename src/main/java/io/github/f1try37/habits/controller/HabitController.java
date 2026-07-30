@@ -1,6 +1,7 @@
 package io.github.f1try37.habits.controller;
 
 import io.github.f1try37.habits.dto.HabitCreateRequest;
+import io.github.f1try37.habits.dto.HabitEntryResponse;
 import io.github.f1try37.habits.dto.HabitResponse;
 import io.github.f1try37.habits.service.HabitService;
 import jakarta.validation.Valid;
@@ -48,5 +49,11 @@ public class HabitController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         habitService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{habitId}/entries")
+    public ResponseEntity<HabitEntryResponse> createEntry(@PathVariable Long habitId) {
+        HabitEntryResponse response = habitService.createEntry(habitId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

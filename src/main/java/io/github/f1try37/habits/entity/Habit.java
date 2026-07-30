@@ -3,6 +3,8 @@ package io.github.f1try37.habits.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Habit {
@@ -13,6 +15,8 @@ public class Habit {
     private String name;
     private String description;
     private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "habit", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HabitEntry> entries = new ArrayList<>();
 
     public Habit() {}
 
@@ -30,6 +34,10 @@ public class Habit {
 
     public LocalDateTime getCreatedAt() {
         return createdAt;
+    }
+
+    public List<HabitEntry> getEntries() {
+        return entries;
     }
 
     public void setName(String name) {
