@@ -17,13 +17,14 @@ Java21, Spring Boot 4.1.0, Spring Data JPA, PostgreSQL 16, Docker, Maven.
 
 ## API
 
-| Method | Path              | Description     | Status        |
-|--------|-------------------|-----------------|---------------|
-| POST   | /api/habits       | Make habit      | 201, 400      |
-| GET    | /api/habits       | Get habits      | 200           |
-| GET    | /api/habits/{/id} | Get habit by id | 200, 404      |
-| PUT    | /api/habits       | Update habit    | 200, 400, 404 |
-| DELETE | /api/habits       | Delete habit    | 204, 404      |
+| Method | Path                     | Description     | Status        |
+|--------|--------------------------|-----------------|---------------|
+| POST   | /api/habits              | Make habit      | 201, 400      |
+| GET    | /api/habits              | Get habits      | 200           |
+| GET    | /api/habits/{/id}        | Get habit by id | 200, 404      |
+| PUT    | /api/habits              | Update habit    | 200, 400, 404 |
+| DELETE | /api/habits              | Delete habit    | 204, 404      |
+| POST   | /api/habits/{id}/entries | Add hanit entry | 201, 404, 409 |
 
 ## Examples
 
