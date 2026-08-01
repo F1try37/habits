@@ -2,9 +2,12 @@ package io.github.f1try37.habits.controller;
 
 import io.github.f1try37.habits.dto.HabitCreateRequest;
 import io.github.f1try37.habits.dto.HabitResponse;
+import io.github.f1try37.habits.security.CustomUserDetailsService;
+import io.github.f1try37.habits.security.JwtService;
 import io.github.f1try37.habits.service.HabitService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -19,7 +22,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(HabitController.class)
+@AutoConfigureMockMvc(addFilters = false)
 class HabitControllerTest {
+
+    @MockitoBean
+    private JwtService jwtService;
+
+    @MockitoBean
+    private CustomUserDetailsService userDetailsService;
 
     @Autowired
     private MockMvc mockMvc;

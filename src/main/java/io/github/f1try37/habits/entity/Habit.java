@@ -17,6 +17,9 @@ public class Habit {
     private LocalDateTime createdAt;
     @OneToMany(mappedBy = "habit", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HabitEntry> entries = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public Habit() {}
 
@@ -40,6 +43,14 @@ public class Habit {
         return entries;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -51,5 +62,18 @@ public class Habit {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Habit habit = (Habit) o;
+        return id != null && id.equals(habit.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -1,6 +1,32 @@
-### Создать привычку
-POST http://127.0.0.1:8081/api/habits
+@host = http://127.0.0.1:8081
+@token =
+
+### Регистрация пользователя
+POST {{host}}/api/auth/register
 Content-Type: application/json
+
+{
+  "username": "f1try37",
+  "password": "testpassword123"
+}
+
+### Логин
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "f1try37",
+  "password": "testpassword123"
+}
+
+> {%
+    client.global.set("token", response.body.token);
+%}
+
+### Создать привычку
+POST {{host}}/api/habits
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "Учиться",
@@ -8,17 +34,21 @@ Content-Type: application/json
 }
 
 ### Получить список привычек
-GET http://127.0.0.1:8081/api/habits
+GET {{host}}/api/habits
+Authorization: Bearer {{token}}
 
 ### Привычка по id
-GET http://127.0.0.1:8081/api/habits/1
+GET {{host}}/api/habits/1
+Authorization: Bearer {{token}}
 
 ### Несуществующая привычка
-GET http://127.0.0.1:8081/api/habits/999
+GET {{host}}/api/habits/999
+Authorization: Bearer {{token}}
 
 ### Невалидная привычка
-POST http://127.0.0.1:8081/api/habits
+POST {{host}}/api/habits
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "",
@@ -26,8 +56,9 @@ Content-Type: application/json
 }
 
 ### Обновление привычки
-PUT http://127.0.0.1:8081/api/habits/2
+PUT {{host}}/api/habits/2
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "Читать книги",
@@ -35,13 +66,20 @@ Content-Type: application/json
 }
 
 ### Удаление привычки
-DELETE http://127.0.0.1:8081/api/habits/4
+DELETE {{host}}/api/habits/4
+Authorization: Bearer {{token}}
 
 ### Удаление несуществующей привычки
-DELETE http://127.0.0.1:8081/api/habits/999
+DELETE {{host}}/api/habits/999
+Authorization: Bearer {{token}}
 
 ### Отметить привычку выполненной
-POST http://127.0.0.1:8081/api/habits/2/entries
+POST {{host}}/api/habits/2/entries
+Authorization: Bearer {{token}}
 
 ### Отметить несуществующую привычку выполненной
-POST http://127.0.0.1:8081/api/habits/999/entries
+POST {{host}}/api/habits/999/entries
+Authorization: Bearer {{token}}
+
+### Запрос без токена — должен вернуть 401
+GET {{host}}/api/habits

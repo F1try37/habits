@@ -50,4 +50,17 @@ public class HabitEntry {
             completedAt = LocalDate.now();
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HabitEntry habitEntry = (HabitEntry) o;
+        return id != null && id.equals(habitEntry.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

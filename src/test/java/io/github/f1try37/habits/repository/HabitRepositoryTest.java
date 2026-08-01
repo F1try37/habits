@@ -2,6 +2,7 @@ package io.github.f1try37.habits.repository;
 
 import io.github.f1try37.habits.entity.Habit;
 import io.github.f1try37.habits.entity.HabitEntry;
+import io.github.f1try37.habits.entity.User;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +29,15 @@ class HabitRepositoryTest {
     @Test
     void shouldCatchNPlus1() {
         //given
+        User user = new User();
+        user.setUsername("testuser");
+        user.setPassword("hash");
+        entityManager.persist(user);
+
         Habit habit = new Habit();
         habit.setName("Reading");
         habit.setDescription("30 pages");
+        habit.setUser(user);      // ← вот это
         entityManager.persist(habit);
         HabitEntry entry1 = new HabitEntry();
         entry1.setHabit(habit);
