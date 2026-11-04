@@ -17,6 +17,14 @@ public class GlobalExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+    @ExceptionHandler(HabitAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleHabitAlreadyExists(HabitAlreadyExistsException ex) {
+
+        ErrorResponse error = new ErrorResponse(ex.getMessage(), HttpStatus.CONFLICT.value(), LocalDateTime.now());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
     @ExceptionHandler(HabitNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleHabitNotFound(HabitNotFoundException ex) {
 

@@ -1,4 +1,4 @@
-package io.github.f1try37.habits.entity;
+package io.github.f1try37.habits.models.entity;
 
 import jakarta.persistence.*;
 
@@ -12,21 +12,17 @@ import java.time.LocalDate;
                 columnNames = {"habit_id", "completed_at"}
         )
 )
-public class HabitEntry {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(nullable = false)
+public class HabitEntry extends BaseEntity {
+
+    @Column(name = "completed_at",nullable = false)
     private LocalDate completedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "habit_id", nullable = false)
     private Habit habit;
 
     public HabitEntry() {}
 
-    public Long getId() {
-        return id;
-    }
 
     public LocalDate getCompletedAt() {
         return completedAt;
@@ -49,18 +45,5 @@ public class HabitEntry {
         if (completedAt == null) {
             completedAt = LocalDate.now();
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HabitEntry habitEntry = (HabitEntry) o;
-        return id != null && id.equals(habitEntry.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }

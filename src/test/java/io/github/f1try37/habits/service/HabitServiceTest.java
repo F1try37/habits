@@ -2,7 +2,7 @@ package io.github.f1try37.habits.service;
 
 import io.github.f1try37.habits.dto.HabitCreateRequest;
 import io.github.f1try37.habits.dto.HabitResponse;
-import io.github.f1try37.habits.entity.Habit;
+import io.github.f1try37.habits.models.entity.Habit;
 import io.github.f1try37.habits.exceptions.HabitNotFoundException;
 import io.github.f1try37.habits.repository.HabitRepository;
 import org.junit.jupiter.api.Test;
@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -48,11 +49,12 @@ class HabitServiceTest {
 
     @Test
     void shouldThrowWhenHabitNotFound() {
+        UUID random = UUID.randomUUID();
         //given
-        when(habitRepository.findById(anyLong())).thenReturn(Optional.empty());
+        when(habitRepository.findById(random)).thenReturn(Optional.empty());
 
         //when + then
-        HabitNotFoundException ex = assertThrows(HabitNotFoundException.class, () -> habitService.getById(1L));
-        assertTrue(ex.getMessage().contains("1"));
+        HabitNotFoundException ex = assertThrows(HabitNotFoundException.class, () -> habitService.getById(random));
+        assertTrue(ex.getMessage().contains(String.valueOf(random)));
     }
 }

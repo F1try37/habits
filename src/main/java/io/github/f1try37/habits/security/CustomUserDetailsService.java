@@ -1,6 +1,6 @@
 package io.github.f1try37.habits.security;
 
-import io.github.f1try37.habits.entity.User;
+import io.github.f1try37.habits.models.entity.User;
 import io.github.f1try37.habits.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

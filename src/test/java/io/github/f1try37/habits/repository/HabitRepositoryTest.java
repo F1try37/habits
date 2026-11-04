@@ -1,8 +1,8 @@
 package io.github.f1try37.habits.repository;
 
-import io.github.f1try37.habits.entity.Habit;
-import io.github.f1try37.habits.entity.HabitEntry;
-import io.github.f1try37.habits.entity.User;
+import io.github.f1try37.habits.models.entity.Habit;
+import io.github.f1try37.habits.models.entity.HabitEntry;
+import io.github.f1try37.habits.models.entity.User;
 import org.hibernate.Hibernate;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +12,7 @@ import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -47,11 +48,11 @@ class HabitRepositoryTest {
         entityManager.persist(entry1);
         entityManager.persist(entry2);
         entityManager.flush();
-        Long habitId = habit.getId();
+        UUID habitId = habit.getId();
         entityManager.clear();
 
         //when
-        List<Habit> result = habitRepository.findAllBy();
+        List<Habit> result = habitRepository.findAllByUserUsername();
 
         Habit found = result.stream()
                 .filter(h -> h.getId().equals(habitId))

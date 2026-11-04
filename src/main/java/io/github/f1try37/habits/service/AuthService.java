@@ -4,7 +4,7 @@ import io.github.f1try37.habits.dto.AuthResponse;
 import io.github.f1try37.habits.dto.LoginRequest;
 import io.github.f1try37.habits.dto.RegisterRequest;
 import io.github.f1try37.habits.dto.UserResponse;
-import io.github.f1try37.habits.entity.User;
+import io.github.f1try37.habits.models.entity.User;
 import io.github.f1try37.habits.exceptions.InvalidCredentialsException;
 import io.github.f1try37.habits.exceptions.UsernameAlreadyExistsException;
 import io.github.f1try37.habits.repository.UserRepository;
@@ -22,7 +22,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     private UserResponse toResponse(User user) {
-        return new UserResponse(user.getId(), user.getUsername(), user.getCreatedAt());
+        return new UserResponse(user.getUsername());
     }
 
     public AuthService(JwtService jwtService, UserRepository userRepository, PasswordEncoder passwordEncoder) {
