@@ -4,7 +4,9 @@ import io.github.f1try37.habits.dto.HabitCreateRequest;
 import io.github.f1try37.habits.dto.HabitResponse;
 import io.github.f1try37.habits.models.entity.Habit;
 import io.github.f1try37.habits.exceptions.HabitNotFoundException;
+import io.github.f1try37.habits.models.entity.User;
 import io.github.f1try37.habits.repository.HabitRepository;
+import io.github.f1try37.habits.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -12,7 +14,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,12 +25,18 @@ class HabitServiceTest {
     @Mock
     private HabitRepository habitRepository;
 
+    @Mock
+    private UserRepository userRepository;
+
     @InjectMocks
     private HabitService habitService;
 
     @Test
     void shouldCreateHabit() {
         //given
+        User user = new User();
+        when(userRepository.findByUsername("alice")).thenReturn(Optional.of(user));
+
         HabitCreateRequest request = new HabitCreateRequest("Reading", "30 pages");
 
         Habit savedHabit = new Habit();
@@ -39,7 +46,7 @@ class HabitServiceTest {
         when(habitRepository.save(any(Habit.class))).thenReturn(savedHabit);
 
         //when
-        HabitResponse result = habitService.create(request);
+        HabitResponse result = habitService.create("alice", request);
 
         //then
         assertEquals("Reading", result.name());
@@ -49,12 +56,12 @@ class HabitServiceTest {
 
     @Test
     void shouldThrowWhenHabitNotFound() {
-        UUID random = UUID.randomUUID();
+        String name = "Reading";
         //given
-        when(habitRepository.findById(random)).thenReturn(Optional.empty());
+        when(habitRepository.findByNameAndUserUsername("Reading", "alice")).thenReturn(Optional.empty());
 
         //when + then
-        HabitNotFoundException ex = assertThrows(HabitNotFoundException.class, () -> habitService.getById(random));
-        assertTrue(ex.getMessage().contains(String.valueOf(random)));
+        HabitNotFoundException ex = assertThrows(HabitNotFoundException.class, () -> habitService.getByName("Reading", "alice"));
+        assertTrue(ex.getMessage().contains(String.valueOf("Reading")));
     }
 }

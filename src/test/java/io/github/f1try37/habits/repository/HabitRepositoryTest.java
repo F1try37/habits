@@ -1,5 +1,6 @@
 package io.github.f1try37.habits.repository;
 
+import io.github.f1try37.habits.config.JpaAuditingConfiguration;
 import io.github.f1try37.habits.models.entity.Habit;
 import io.github.f1try37.habits.models.entity.HabitEntry;
 import io.github.f1try37.habits.models.entity.User;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
+import org.springframework.context.annotation.Import;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @DataJpaTest
+@Import(JpaAuditingConfiguration.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class HabitRepositoryTest {
 
@@ -38,7 +41,7 @@ class HabitRepositoryTest {
         Habit habit = new Habit();
         habit.setName("Reading");
         habit.setDescription("30 pages");
-        habit.setUser(user);      // ← вот это
+        habit.setUser(user);
         entityManager.persist(habit);
         HabitEntry entry1 = new HabitEntry();
         entry1.setHabit(habit);
@@ -52,7 +55,7 @@ class HabitRepositoryTest {
         entityManager.clear();
 
         //when
-        List<Habit> result = habitRepository.findAllByUserUsername();
+        List<Habit> result = habitRepository.findAllByUserUsername("testuser");
 
         Habit found = result.stream()
                 .filter(h -> h.getId().equals(habitId))
